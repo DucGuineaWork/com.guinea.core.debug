@@ -1,0 +1,14 @@
+{
+    "name": "com.guinea.core.debug",
+    "version": "0.1.0",
+    "displayName": "Guinea Core Debug",
+    "description": "Guinea Core Debug Package",
+    "unity": "2022.3",
+    "dependencies": {
+    },
+    "keywords": [],
+    "author": {
+      "name": "GuineaPig"
+    }
+  }
+  
