@@ -5,7 +5,8 @@
     "description": "Guinea Core Debug Package",
     "unity": "2022.3",
     "dependencies": {
-        "com.unity.inputsystem": "1.7.0"
+        "com.unity.inputsystem": "1.7.0",
+        "com.unity.textmeshpro": "3.0.6"
     },
     "keywords": [],
     "author": {
