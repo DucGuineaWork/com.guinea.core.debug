@@ -33,7 +33,7 @@ namespace Guinea.Core.Debug
 
         public void OnFPSDropDownValueChanged(int value)
         {
-            QualitySettings.SetQualityLevel( m_fpsDropDown.value >=0 &&m_fpsDropDown.value< s_fpsMapper.Length ? s_fpsMapper[m_fpsDropDown.value] : -1, true);
+            Application.targetFrameRate = m_fpsDropDown.value >=0 &&m_fpsDropDown.value< s_fpsMapper.Length ? s_fpsMapper[m_fpsDropDown.value] : -1, true);
         }
 
         public void Toggle()
