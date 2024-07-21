@@ -18,7 +18,8 @@ namespace Guinea.Core.Debug
 
         public void OnQualityDropDownValueChanged(int value)
         {
-            QualitySettings.SetQualityLevel(value, true);
+            UnityEngine.Debug.Log(m_qualityDropdown.value);
+            QualitySettings.SetQualityLevel(m_qualityDropdown.value, true);
         }
 
         public void Toggle()
