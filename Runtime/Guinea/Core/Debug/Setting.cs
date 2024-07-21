@@ -9,17 +9,31 @@ namespace Guinea.Core.Debug
     public class Setting : MonoBehaviour
     {
         [SerializeField]TMP_Dropdown m_qualityDropdown;
+        [SerializeField]TMP_Dropdown m_fpsDropDown;
+
+        private static int[] s_fpsMapper = new int[] { -1 , 30, 60, 90, 120};
 
         void Start()
         {
             m_qualityDropdown.options = BuildOptionData<Quality>();
+            m_fpsDropDown.options = BuildOptionData<FPSDropDown>();
+        }
+
+        void OnEnable()
+        {
             m_qualityDropdown.value = QualitySettings.GetQualityLevel();
+            m_fpsDropDown.value = 0;
         }
 
         public void OnQualityDropDownValueChanged(int value)
         {
             UnityEngine.Debug.Log(m_qualityDropdown.value);
             QualitySettings.SetQualityLevel(m_qualityDropdown.value, true);
+        }
+
+        public void OnFPSDropDownValueChanged(int value)
+        {
+            QualitySettings.SetQualityLevel( m_fpsDropDown.value >=0 &&m_fpsDropDown.value< s_fpsMapper.Length ? s_fpsMapper[m_fpsDropDown.value] : -1, true);
         }
 
         public void Toggle()
@@ -42,6 +56,15 @@ namespace Guinea.Core.Debug
             Low = 0,
             Medium,
             High
+       }
+
+       public enum FPSDropDown
+       {
+            Default = 0,
+            FPS_30,
+            FPS_60,
+            FPS_90,
+            FPS_120,
        }
     }
 }
