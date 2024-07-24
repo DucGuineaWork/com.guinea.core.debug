@@ -10,6 +10,7 @@ namespace Guinea.Core.Debug
     {
         [SerializeField]TMP_Dropdown m_qualityDropdown;
         [SerializeField]TMP_Dropdown m_fpsDropDown;
+        [SerializeField]TMP_InputField m_fixedDeltaTime;
 
         private static int[] s_fpsMapper = new int[] { -1 , 30, 60, 90, 120};
 
@@ -23,11 +24,17 @@ namespace Guinea.Core.Debug
         {
             m_qualityDropdown.value = QualitySettings.GetQualityLevel();
             m_fpsDropDown.value = 0;
+            m_fixedDeltaTime.text = $"{Time.fixedDeltaTime}";
+        }
+
+        public void OnFixedDeltaTimeChanged(string value)
+        {
+            Time.fixedDeltaTime = float.Parse(m_fixedDeltaTime.text);
+            UnityEngine.Debug.Log(Time.fixedDeltaTime);
         }
 
         public void OnQualityDropDownValueChanged(int value)
         {
-            UnityEngine.Debug.Log(m_qualityDropdown.value);
             QualitySettings.SetQualityLevel(m_qualityDropdown.value, true);
         }
 
