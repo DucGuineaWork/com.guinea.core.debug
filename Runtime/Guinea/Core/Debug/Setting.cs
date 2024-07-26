@@ -11,6 +11,8 @@ namespace Guinea.Core.Debug
         [SerializeField]TMP_Dropdown m_qualityDropdown;
         [SerializeField]TMP_Dropdown m_fpsDropDown;
         [SerializeField]TMP_InputField m_fixedDeltaTime;
+        [SerializeField]RangeToggleSlider m_rangeToggleSliderPrefab;
+        [SerializeField]Transform m_rangeToggleSliderContainer;
 
         private static int[] s_fpsMapper = new int[] { -1 , 30, 60, 90, 120};
 
@@ -18,6 +20,7 @@ namespace Guinea.Core.Debug
         {
             m_qualityDropdown.options = BuildOptionData<Quality>();
             m_fpsDropDown.options = BuildOptionData<FPSDropDown>();
+            FindAndCreateToggleSlider();
         }
 
         void OnEnable()
@@ -25,6 +28,16 @@ namespace Guinea.Core.Debug
             m_qualityDropdown.value = QualitySettings.GetQualityLevel();
             m_fpsDropDown.value = 0;
             m_fixedDeltaTime.text = $"{Time.fixedDeltaTime}";
+        }
+
+        private void FindAndCreateToggleSlider()
+        {
+            RangeToggle[] rangeToggles = FindObjectsOfType<RangeToggle>(true);
+            foreach (RangeToggle rangeToggle in rangeToggles)
+            {
+                RangeToggleSlider instance = Instantiate(m_rangeToggleSliderPrefab, m_rangeToggleSliderContainer);
+                instance.Initialize(rangeToggle);
+            }
         }
 
         public void OnFixedDeltaTimeChanged(string value)
