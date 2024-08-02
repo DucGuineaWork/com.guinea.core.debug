@@ -56,7 +56,7 @@ namespace Guinea.Core.Debug
         {
             bool isValidIndex =  m_fpsDropDown.value >=0 &&m_fpsDropDown.value< s_fpsMapper.Length;
             Application.targetFrameRate = isValidIndex ? s_fpsMapper[m_fpsDropDown.value] : -1;
-            m_targetFrameRateIndex = isValidIndex ? value: 0;
+            m_targetFrameRateIndex = isValidIndex ? m_fpsDropDown.value: 0;
         }
 
         public void Toggle()
