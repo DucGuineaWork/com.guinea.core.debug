@@ -13,6 +13,7 @@ namespace Guinea.Core.Debug
         [SerializeField]TMP_InputField m_fixedDeltaTime;
         [SerializeField]RangeToggleSlider m_rangeToggleSliderPrefab;
         [SerializeField]Transform m_rangeToggleSliderContainer;
+        private int m_targetFrameRateIndex = 0;
 
         private static int[] s_fpsMapper = new int[] { -1 , 30, 60, 90, 120};
 
@@ -26,7 +27,7 @@ namespace Guinea.Core.Debug
         void OnEnable()
         {
             m_qualityDropdown.value = QualitySettings.GetQualityLevel();
-            m_fpsDropDown.value = 0;
+            m_fpsDropDown.value = m_targetFrameRateIndex;
             m_fixedDeltaTime.text = $"{Time.fixedDeltaTime}";
         }
 
@@ -53,7 +54,9 @@ namespace Guinea.Core.Debug
 
         public void OnFPSDropDownValueChanged(int value)
         {
-            Application.targetFrameRate = m_fpsDropDown.value >=0 &&m_fpsDropDown.value< s_fpsMapper.Length ? s_fpsMapper[m_fpsDropDown.value] : -1;
+            bool isValidIndex =  m_fpsDropDown.value >=0 &&m_fpsDropDown.value< s_fpsMapper.Length;
+            Application.targetFrameRate = isValidIndex ? s_fpsMapper[m_fpsDropDown.value] : -1;
+            m_targetFrameRateIndex = isValidIndex ? value: 0;
         }
 
         public void Toggle()
