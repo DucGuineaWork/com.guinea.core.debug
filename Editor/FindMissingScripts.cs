@@ -1,7 +1,9 @@
 using UnityEditor;
 using UnityEngine;
 
-public static class FindMissingScripts
+namespace Guinea.Core.Debug.Editor
+{
+    public static class FindMissingScripts
 {
     [MenuItem("Tools/FindMissingScripts")]
     private static void FindMissingScriptsInCurrentScene()
@@ -26,11 +28,13 @@ public static class FindMissingScripts
                         t = t.parent;
                     }
 
-                    Debug.LogWarning("Missing script in GameObject: " + path, go);
+                    UnityEngine.Debug.LogWarning("Missing script in GameObject: " + path, go);
                 }
             }
         }
 
-        Debug.Log("Total missing scripts found: " + missingScriptCount);
+        UnityEngine.Debug.Log("Total missing scripts found: " + missingScriptCount);
     }
+}
+
 }
