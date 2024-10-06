@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 namespace Guinea.Core.Debug
 {
-    public class FPSCounter : MonoBehaviour 
+    public class FPSCounter : MonoBehaviour
     {
-        [SerializeField]TextMeshProUGUI m_fpsText;
-        [SerializeField]TextMeshProUGUI m_fpsMinText;
-        [SerializeField]TextMeshProUGUI m_fpsMaxText;
+        [SerializeField] TextMeshProUGUI m_fpsText;
+        [SerializeField] TextMeshProUGUI m_fpsMinText;
+        [SerializeField] TextMeshProUGUI m_fpsMaxText;
+        [SerializeField] TextMeshProUGUI m_deltaTime;
         const float fpsMeasurePeriod = 0.5f;
         private int m_FpsAccumulator = 0;
         private float m_FpsNextPeriod = 0;
@@ -17,15 +18,15 @@ namespace Guinea.Core.Debug
         private int m_minFps = Int32.MaxValue;
         private int m_maxFps = Int32.MinValue;
 
-        private void Start() 
+        private void Start()
         {
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
         }
 
-        private void Update() 
+        private void Update()
         {
             m_FpsAccumulator++;
-            if (Time.realtimeSinceStartup> m_FpsNextPeriod) 
+            if (Time.realtimeSinceStartup > m_FpsNextPeriod)
             {
                 m_CurrentFps = (int)(m_FpsAccumulator / fpsMeasurePeriod);
                 m_minFps = Mathf.Min(m_minFps, m_CurrentFps);
@@ -36,11 +37,12 @@ namespace Guinea.Core.Debug
                 m_fpsMinText.text = $"Min: {m_minFps}";
                 m_fpsMaxText.text = $"Max: {m_maxFps}";
             }
+            m_deltaTime.text = $"Delta: {Time.deltaTime:F6}";
         }
 
         private void OnApplicationPause(bool pauseStatus)
         {
-            if(!pauseStatus)
+            if (!pauseStatus)
             {
                 m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
             }
