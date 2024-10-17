@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Guinea.Core.Debug
 {
@@ -11,20 +11,34 @@ namespace Guinea.Core.Debug
         [SerializeField] TextMeshProUGUI m_fpsMinText;
         [SerializeField] TextMeshProUGUI m_fpsMaxText;
         [SerializeField] TextMeshProUGUI m_deltaTime;
-        const float fpsMeasurePeriod = 0.5f;
+
+        [SerializeField] float fpsMeasurePeriod = 0.5f;
+        [SerializeField] float startDelay = 2f;  // Now adjustable in the Unity Editor
+
         private int m_FpsAccumulator = 0;
         private float m_FpsNextPeriod = 0;
         private int m_CurrentFps;
         private int m_minFps = Int32.MaxValue;
         private int m_maxFps = Int32.MinValue;
+        private bool isCalculating = false;
 
         private void Start()
         {
+            StartCoroutine(StartCalculatingAfterDelay());
+        }
+
+        private IEnumerator StartCalculatingAfterDelay()
+        {
+            // Delay the start of FPS calculation
+            yield return new WaitForSeconds(startDelay);
+            isCalculating = true;
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
         }
 
         private void Update()
         {
+            if (!isCalculating) return;
+
             m_FpsAccumulator++;
             if (Time.realtimeSinceStartup > m_FpsNextPeriod)
             {
@@ -42,7 +56,7 @@ namespace Guinea.Core.Debug
 
         private void OnApplicationPause(bool pauseStatus)
         {
-            if (!pauseStatus)
+            if (!pauseStatus && isCalculating)
             {
                 m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
             }
