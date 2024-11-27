@@ -8,7 +8,7 @@ namespace Guinea.Core.Debug.Editor
     [MenuItem("Tools/FindMissingScripts")]
     private static void FindMissingScriptsInCurrentScene()
     {
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+        GameObject[] allObjects = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
         int missingScriptCount = 0;
 
         foreach (GameObject go in allObjects)
